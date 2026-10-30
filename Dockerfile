@@ -5,7 +5,7 @@ RUN mvn --batch-mode --no-transfer-progress dependency:go-offline
 COPY src src
 RUN mvn --batch-mode --no-transfer-progress -DskipTests package
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:24-jre
 ARG TARGETARCH
 ARG SPEEDTEST_VERSION=1.2.0
 ARG SPEEDTEST_SHA256_AMD64=5690596c54ff9bed63fa3732f818a05dbc2db19ad36ed68f21ca5f64d5cfeeb7
