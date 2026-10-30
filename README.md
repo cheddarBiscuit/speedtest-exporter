@@ -27,6 +27,35 @@ configure caching and a sensible scrape interval. The service listens on all
 interfaces and has no authentication; expose it only to trusted monitoring
 clients, using firewall rules or an authenticated reverse proxy.
 
+### Docker
+
+The `Dockerfile` builds the jar and bundles the Ookla CLI (amd64 and arm64), so
+neither Java nor the CLI is needed on the host.
+
+```sh
+docker build -t speedtest-exporter .
+docker run -d --name speedtest-exporter --restart unless-stopped \
+  -p 9798:9798 -e SPEEDTEST_TIMEOUT=55 speedtest-exporter
+curl http://localhost:9798/metrics
+```
+
+Stop it with `docker stop speedtest-exporter`.
+
+A test takes tens of seconds, so give Prometheus a long scrape timeout and keep
+`SPEEDTEST_TIMEOUT` below it:
+
+```yaml
+scrape_configs:
+  - job_name: 'speedtest-exporter'
+    scrape_interval: 60m
+    scrape_timeout: 1m
+    static_configs:
+      - targets: ['<host>:9798']
+```
+
+If you scrape more often than you want to test, set `SPEEDTEST_CACHE_FOR` (seconds)
+so extra scrapes reuse the last result.
+
 ### Configuration
 
 | Environment variable | Default | Description |
