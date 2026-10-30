@@ -27,6 +27,20 @@ configure caching and a sensible scrape interval. The service listens on all
 interfaces and has no authentication; expose it only to trusted monitoring
 clients, using firewall rules or an authenticated reverse proxy.
 
+### Docker
+
+The `Dockerfile` builds the jar and bundles the Ookla CLI (amd64 and arm64), so
+neither Java nor the CLI is needed on the host.
+
+```sh
+docker build -t speedtest-exporter .
+docker run -d --name speedtest-exporter --restart unless-stopped \
+  -p 9798:9798 -e SPEEDTEST_CACHE_FOR=300 speedtest-exporter
+curl http://localhost:9798/metrics
+```
+
+Stop it with `docker stop speedtest-exporter`.
+
 ### Configuration
 
 | Environment variable | Default | Description |
