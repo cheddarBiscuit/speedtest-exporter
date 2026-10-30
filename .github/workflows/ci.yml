@@ -45,12 +45,20 @@ jobs:
           load: true
           tags: speedtest-exporter:ci
           cache-from: type=gha
-      - name: Smoke test
+      - name: Smoke test with a fake speedtest CLI
         run: |
-          docker run -d --name exporter -p 9798:9798 speedtest-exporter:ci
+          docker run -d --name exporter -p 9798:9798 \
+            -v "$PWD/.github/ci/fake-speedtest.sh:/fake-speedtest.sh:ro" \
+            -e SPEEDTEST_BINARY=/fake-speedtest.sh speedtest-exporter:ci
           for _ in $(seq 20); do
-            curl -fsS http://localhost:9798/ && exit 0
+            curl -fsS http://localhost:9798/ >/dev/null && break
             sleep 1
           done
-          docker logs exporter
-          exit 1
+          curl -fsS http://localhost:9798/metrics | tee metrics.txt
+          for metric in speedtest_server_id speedtest_jitter_latency_milliseconds \
+              speedtest_ping_latency_milliseconds speedtest_download_bits_per_second \
+              speedtest_upload_bits_per_second speedtest_up; do
+            grep -q "^$metric " metrics.txt || { echo "missing $metric"; docker logs exporter; exit 1; }
+          done
+          grep -q '^speedtest_up 1.0$' metrics.txt
+          grep -q '^speedtest_download_bits_per_second 1.0E8$' metrics.txt
