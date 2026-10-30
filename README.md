@@ -41,6 +41,10 @@ curl http://localhost:9798/metrics
 
 Stop it with `docker stop speedtest-exporter`.
 
+Merges to `main` publish a multi-arch image to
+`ghcr.io/cheddarbiscuit/speedtest-exporter` (`latest`, a short-SHA tag, and
+`X.Y.Z` for `vX.Y.Z` release tags), so you can `docker pull` it instead of building.
+
 A test takes tens of seconds, so give Prometheus a long scrape timeout and keep
 `SPEEDTEST_TIMEOUT` below it:
 
