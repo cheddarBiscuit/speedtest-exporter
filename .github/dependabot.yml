@@ -12,3 +12,13 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # Build and runtime images must stay on the same JDK, so update them together.
+    groups:
+      java-images:
+        patterns: ['maven', 'eclipse-temurin']
+    # The project targets Java 17; move JDK versions deliberately, not via PRs.
+    ignore:
+      - dependency-name: eclipse-temurin
+        update-types: ['version-update:semver-major']
+      - dependency-name: maven
+        update-types: ['version-update:semver-major']
