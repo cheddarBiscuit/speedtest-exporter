@@ -104,26 +104,12 @@ uncached tests.
 
 ## Automated dependency and vulnerability updates
 
-GitHub Actions runs `mvn verify` on pushes and pull requests. A separate
-**Dependency and vulnerability updates** workflow runs Renovate daily at
-06:17 UTC, or manually through **Actions → Run workflow**. It opens PRs for Maven
-dependencies/build plugins and GitHub Actions, including pinned action digests.
-Updates are never automatically merged.
+GitHub Actions runs `mvn verify` and builds and smoke-tests the Docker image on
+pull requests and pushes to `main`. Dependabot (`.github/dependabot.yml`) opens
+weekly PRs for Maven dependencies and plugins, GitHub Actions, and the Docker base
+images, and Dependabot alerts and security updates open PRs for known
+vulnerabilities. Updates are never automatically merged.
 
-One-time repository setup:
-
-1. Create a dedicated bot's fine-grained personal access token scoped to this
-   repository with **Contents: read/write**, **Pull requests: read/write**,
-   **Workflows: read/write** (to update Actions), and **Dependabot alerts: read**.
-   Store it as the Actions repository secret `RENOVATE_TOKEN`. Do not put it in
-   a file. A bot token is used instead of `GITHUB_TOKEN` so its PRs trigger CI.
-2. Enable **Dependency graph** and **Dependabot alerts** in the repository's
-   security settings. For broader transitive coverage, also enable automatic
-   dependency submission for Maven where available.
-3. Merge these workflows into the default branch, enable Actions/scheduled
-   workflows if needed, then run the update workflow manually to verify access.
-
-`renovate.json` enables OSV vulnerability checks for direct Maven dependencies
-and GitHub vulnerability-alert fixes for dependencies present in the dependency
-graph. Fix PRs require an available patched version; this is not a complete
-security audit. Without the token, the update workflow cannot open PRs.
+The bundled Ookla CLI is pinned by version and SHA-256 checksum in the
+`Dockerfile`. Dependabot cannot update it; when bumping `SPEEDTEST_VERSION`, update
+both checksums too.
