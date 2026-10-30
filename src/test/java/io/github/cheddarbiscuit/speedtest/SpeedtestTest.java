@@ -38,7 +38,7 @@ class SpeedtestTest {
     }
 
     @Test
-    @EnabledOnOs(OS.LINUX)
+    @EnabledOnOs({OS.LINUX, OS.MAC})
     void invokesOfficialCliWithSeparateArgumentsAndOptionalServer() throws Exception {
         Path arguments = directory.resolve("arguments");
         Speedtest cli = cli("""
@@ -60,7 +60,7 @@ class SpeedtestTest {
     }
 
     @Test
-    @EnabledOnOs(OS.LINUX)
+    @EnabledOnOs({OS.LINUX, OS.MAC})
     void handlesNonzeroExitMissingBinaryAndWrongImplementation() throws Exception {
         assertThrows(IOException.class, () -> cli("exit 1\n", "", 2).run());
         assertThrows(IOException.class, () -> cli("echo unofficial\n", "", 2).checkBinary());
@@ -69,7 +69,7 @@ class SpeedtestTest {
     }
 
     @Test
-    @EnabledOnOs(OS.LINUX)
+    @EnabledOnOs({OS.LINUX, OS.MAC})
     void killsTimedOutProcess() throws Exception {
         Path pid = directory.resolve("pid");
         Speedtest cli = cli("echo $$ > '" + pid + "'\nexec sleep 30\n", "", 1);
