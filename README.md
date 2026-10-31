@@ -5,6 +5,11 @@ A Java 17 Prometheus exporter inspired by
 It runs the official Ookla Speedtest CLI on demand and preserves the upstream
 metric names and configuration. No Python runtime is needed.
 
+This repo exists because the original project is no longer actively maintained
+(its last commit to the default branch was in June 2023), so it doesn't get
+dependency upgrades or security fixes. This port is kept up to date with
+Dependabot, vulnerability scanning and CI, and publishes a multi-arch Docker image.
+
 ## License
 
 This project is a Java port of
