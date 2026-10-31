@@ -102,6 +102,13 @@ Keep `scrape_timeout` greater than `SPEEDTEST_TIMEOUT` and no greater than
 `scrape_interval`. Prometheus's default scrape timeout is too short for most
 uncached tests.
 
+### Grafana dashboard
+
+The metric names match the upstream exporter, so the community
+[Speedtest Exporter Dashboard](https://grafana.com/grafana/dashboards/13665-speedtest-exporter-dashboard/)
+(Grafana ID 13665) works unchanged. In Grafana, choose Dashboards, then Import,
+enter `13665`, and select your Prometheus data source.
+
 ## Automated dependency and vulnerability updates
 
 GitHub Actions runs `mvn verify` and builds and smoke-tests the Docker image on
