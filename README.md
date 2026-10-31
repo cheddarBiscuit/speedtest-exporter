@@ -5,6 +5,14 @@ A Java 17 Prometheus exporter inspired by
 It runs the official Ookla Speedtest CLI on demand and preserves the upstream
 metric names and configuration. No Python runtime is needed.
 
+## License
+
+This project is a Java port of
+[MiguelNdeCarvalho/speedtest-exporter](https://github.com/MiguelNdeCarvalho/speedtest-exporter)
+and is licensed under the [GNU General Public License v3.0](LICENSE), the same
+license as the original. The Docker image also bundles the proprietary Ookla
+Speedtest CLI, which is not covered by this license.
+
 ## Build and run
 
 Requirements: JDK 17+, Maven 3.6.3+, and the
