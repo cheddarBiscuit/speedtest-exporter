@@ -7,6 +7,12 @@
   <artifactId>speedtest-exporter</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <name>speedtest-exporter</name>
+  <licenses>
+    <license>
+      <name>GNU General Public License, version 3</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+    </license>
+  </licenses>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>

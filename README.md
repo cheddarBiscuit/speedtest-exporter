@@ -5,6 +5,19 @@ A Java 17 Prometheus exporter inspired by
 It runs the official Ookla Speedtest CLI on demand and preserves the upstream
 metric names and configuration. No Python runtime is needed.
 
+This repo exists because the original project is no longer actively maintained
+(its last commit to the default branch was in June 2023), so it doesn't get
+dependency upgrades or security fixes. This port is kept up to date with
+Dependabot, vulnerability scanning and CI, and publishes a multi-arch Docker image.
+
+## License
+
+This project is a Java port of
+[MiguelNdeCarvalho/speedtest-exporter](https://github.com/MiguelNdeCarvalho/speedtest-exporter)
+and is licensed under the [GNU General Public License v3.0](LICENSE), the same
+license as the original. The Docker image also bundles the proprietary Ookla
+Speedtest CLI, which is not covered by this license.
+
 ## Build and run
 
 Requirements: JDK 17+, Maven 3.6.3+, and the
@@ -101,6 +114,13 @@ scrape_configs:
 Keep `scrape_timeout` greater than `SPEEDTEST_TIMEOUT` and no greater than
 `scrape_interval`. Prometheus's default scrape timeout is too short for most
 uncached tests.
+
+### Grafana dashboard
+
+The metric names match the upstream exporter, so the community
+[Speedtest Exporter Dashboard](https://grafana.com/grafana/dashboards/13665-speedtest-exporter-dashboard/)
+(Grafana ID 13665) works unchanged. In Grafana, choose Dashboards, then Import,
+enter `13665`, and select your Prometheus data source.
 
 ## Automated dependency and vulnerability updates
 
