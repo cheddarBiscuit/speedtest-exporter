@@ -1,4 +1,4 @@
-FROM maven:3-eclipse-temurin-26 AS build
+FROM maven:3-eclipse-temurin-27 AS build
 WORKDIR /src
 COPY pom.xml .
 RUN mvn --batch-mode --no-transfer-progress dependency:go-offline
